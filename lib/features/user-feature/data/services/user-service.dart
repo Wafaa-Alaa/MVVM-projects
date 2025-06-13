@@ -7,7 +7,13 @@ class UserService {
 
   Future<List<UserModel>> fetchTodos() async {
     try {
-      final response = await http.get(Uri.parse(_baseUrl));
+      final response = await http.get(
+        Uri.parse(_baseUrl),
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+      );
       if (response.statusCode == 200) {
         final List<dynamic> jsonList = jsonDecode(response.body) as List<dynamic>;
         return jsonList.map((json) => UserModel.fromJson(json as Map<String, dynamic>)).toList();
